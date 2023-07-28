@@ -1,5 +1,6 @@
 import {
-   WORDS, KEYBOAD_LETTERS
+   WORDS,
+   KEYBOAD_LETTERS
 } from "./consts";
 
 
@@ -26,9 +27,27 @@ const creatPlaceholderHTML = () => {
    return `<div id="placeholders" class="placeholders-wrapper">${placeholdersHTML}</div>`
 }
 
+const createKeyboard = () => {
+   const keyboard = document.createElement('div');
+   keyboard.classList.add('keyboard');
+   keyboard.id = 'keyboard';
+   const keyboardHTML = KEYBOAD_LETTERS.reduce((acc, curr) => {
+      return acc + `<button class="button-primary keyboard-button" id="${curr}">${curr}</button>`
+   }, '')
+   keyboard.innerHTML = keyboardHTML;
+   return keyboard
+}
+
 export const startGame = () => {
    const randomIndex = Math.floor(Math.random() * WORDS.length);
    const wordToGuess = WORDS[randomIndex]
    sessionStorage.setItem('word', wordToGuess)
-   gameDiv.innerHTML = creatPlaceholderHTML()
+   const keyboardDiv = createKeyboard();
+   keyboardDiv.addEventListener('click', (e) => {
+      console.log(e.target.id)
+   })
+   gameDiv.appendChild(keyboardDiv);
 };
+
+
+// 10:44 видео 4,2
